@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Book from "./Book";
 import AddBook from "./AddBook";
+import { useDispatch, useSelector } from "react-redux";
+import fetchBook from "../redux/book-store/thunk/fetchBooks";
 
 const BookStore = () => {
+  const dispatch = useDispatch();
+  const books = useSelector((state) => state.books);
+  useEffect(() => {
+    dispatch(fetchBook());
+  }, [dispatch]);
+
   return (
     <div className="py-12 2xl:px-6">
       <div className="container grid xl:grid-cols-[auto_350px] 2xl:grid-cols-[auto_400px] gap-4 2xl:gap-8">
@@ -20,7 +28,9 @@ const BookStore = () => {
             </div>
           </div>
           <div className="lws-bookContainer">
-            <Book />
+            {books.map((book) => (
+              <Book key={book.id} book={book} />
+            ))}
           </div>
         </div>
         <div>
