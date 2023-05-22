@@ -1,33 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import addBook from "../redux/book-store/thunk/addBook";
+import updatedBook from "../redux/book-store/thunk/updateBook";
 
-const AddBook = () => {
-  const [data, setData] = useState({});
-  const [featured, setFeatured] = useState(false);
+const AddBook = ({ setData, data, setIsUpdating, isUpdating }) => {
   const dispatch = useDispatch();
   const getFieldData = (e) => {
     const key = e.target.name;
     const value = e.target.value;
     const newObj = { ...data };
     newObj[key] = value;
+    if (e.target.name === "featured" && e.target.checked) {
+      newObj["featured"] = true;
+    } else {
+      newObj["featured"] = false;
+    }
     setData(newObj);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    data.featured = featured;
-    dispatch(addBook(data));
+    if (isUpdating) {
+      dispatch(updatedBook(data.id, data));
+      setIsUpdating(false);
+    } else {
+      dispatch(addBook(data));
+    }
     e.target.reset();
-    setFeatured(false);
+    setData({});
   };
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
-      <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
+      <h4 className="mb-8 text-xl font-bold text-center">
+        {isUpdating ? "Update Book" : "Add New Book"}
+      </h4>
       <form onSubmit={handleSubmit} className="book-form">
         <div className="space-y-2">
           <label htmlFor="name">Book Name</label>
           <input
             onChange={getFieldData}
+            value={data.name || ""}
             required
             className="text-input"
             type="text"
@@ -40,6 +51,7 @@ const AddBook = () => {
           <label htmlFor="category">Author</label>
           <input
             onChange={getFieldData}
+            value={data.author || ""}
             required
             className="text-input"
             type="text"
@@ -52,6 +64,7 @@ const AddBook = () => {
           <label htmlFor="image">Image Url</label>
           <input
             onChange={getFieldData}
+            value={data.thumbnail || ""}
             required
             className="text-input"
             type="text"
@@ -65,6 +78,7 @@ const AddBook = () => {
             <label htmlFor="price">Price</label>
             <input
               onChange={getFieldData}
+              value={data.price || ""}
               required
               className="text-input"
               type="number"
@@ -77,6 +91,7 @@ const AddBook = () => {
             <label htmlFor="quantity">Rating</label>
             <input
               onChange={getFieldData}
+              value={data.rating || ""}
               required
               className="text-input"
               type="number"
@@ -90,9 +105,10 @@ const AddBook = () => {
 
         <div className="flex items-center">
           <input
-            onChange={() => setFeatured(!featured)}
+            onChange={getFieldData}
             id="input-Bookfeatured"
             type="checkbox"
+            checked={data.featured ? true : false}
             name="featured"
             className="w-4 h-4"
           />
@@ -103,7 +119,7 @@ const AddBook = () => {
         </div>
 
         <button type="submit" className="submit" id="submit">
-          Add Book
+          {isUpdating ? "Update Book" : "Add Book"}
         </button>
       </form>
     </div>

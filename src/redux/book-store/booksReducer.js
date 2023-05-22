@@ -21,7 +21,7 @@ const booksReducer = (state = initialState, action) => {
             ...updatedBook,
           };
         }
-        return { ...book };
+        return book;
       });
     case DELETED:
       return state.filter((book) => book.id !== action.payload);

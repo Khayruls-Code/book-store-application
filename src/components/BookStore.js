@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Book from "./Book";
 import AddBook from "./AddBook";
 import { useDispatch, useSelector } from "react-redux";
 import fetchBook from "../redux/book-store/thunk/fetchBooks";
 
 const BookStore = () => {
+  const [data, setData] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
   const dispatch = useDispatch();
   const books = useSelector((state) => state.books);
   useEffect(() => {
@@ -29,12 +31,22 @@ const BookStore = () => {
           </div>
           <div className="lws-bookContainer">
             {books.map((book) => (
-              <Book key={book.id} book={book} />
+              <Book
+                key={book.id}
+                book={book}
+                setData={setData}
+                setIsUpdating={setIsUpdating}
+              />
             ))}
           </div>
         </div>
         <div>
-          <AddBook />
+          <AddBook
+            setData={setData}
+            data={data}
+            isUpdating={isUpdating}
+            setIsUpdating={setIsUpdating}
+          />
         </div>
       </div>
     </div>

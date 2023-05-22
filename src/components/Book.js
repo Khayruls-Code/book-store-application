@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import deleteBook from "../redux/book-store/thunk/deleteBook";
 
-const Book = ({ book }) => {
+const Book = ({ book, setData, setIsUpdating }) => {
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
@@ -35,7 +35,13 @@ const Book = ({ book }) => {
             <span className="badge-success lws-Badge">featured</span>
           )}
           <div className="text-gray-500 space-x-2">
-            <button className="lws-edit">
+            <button
+              onClick={() => {
+                setData(book);
+                setIsUpdating(true);
+              }}
+              className="lws-edit"
+            >
               <svg
                 fill="none"
                 viewBox="0 0 24 24"

@@ -14,9 +14,36 @@
       "author": "Tahmima Anam",
       "thumbnail": "https://m.media-amazon.com/images/I/51hum9ynvKL._SX326_BO1,204,203,200_.jpg",
       "price": "20",
-      "rating": "4",
-      "featured": true,
+      "rating": "5",
+      "featured": false,
       "id": 4
+    },
+    {
+      "featured": true,
+      "name": "Selected Short Stories",
+      "author": "Rabindranath Tagore",
+      "thumbnail": "https://m.media-amazon.com/images/I/51XSlgLS1YL._SX323_BO1,204,203,200_.jpg",
+      "price": "7",
+      "rating": "4",
+      "id": 7
+    },
+    {
+      "name": "Selected Short Stories",
+      "featured": false,
+      "author": "Rabindranath Tagore",
+      "thumbnail": "https://m.media-amazon.com/images/I/51XSlgLS1YL._SX323_BO1,204,203,200_.jpg",
+      "price": "11",
+      "rating": "1",
+      "id": 8
+    },
+    {
+      "name": "Selected Short Stories",
+      "featured": false,
+      "author": "Rabindranath Tagore",
+      "thumbnail": "https://m.media-amazon.com/images/I/51hum9ynvKL._SX326_BO1,204,203,200_.jpg",
+      "price": "111",
+      "rating": "3",
+      "id": 9
     }
   ]
 }
