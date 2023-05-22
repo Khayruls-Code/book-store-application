@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import addBook from "../redux/book-store/thunk/addBook";
 
 const AddBook = () => {
+  const [data, setData] = useState({});
+  const [featured, setFeatured] = useState(false);
+  const dispatch = useDispatch();
+  const getFieldData = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    const newObj = { ...data };
+    newObj[key] = value;
+    setData(newObj);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    data.featured = featured;
+    dispatch(addBook(data));
+    e.target.reset();
+    setFeatured(false);
+  };
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
       <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
-      <form className="book-form">
+      <form onSubmit={handleSubmit} className="book-form">
         <div className="space-y-2">
-          <label for="name">Book Name</label>
+          <label htmlFor="name">Book Name</label>
           <input
+            onChange={getFieldData}
             required
             className="text-input"
             type="text"
@@ -17,8 +37,9 @@ const AddBook = () => {
         </div>
 
         <div className="space-y-2">
-          <label for="category">Author</label>
+          <label htmlFor="category">Author</label>
           <input
+            onChange={getFieldData}
             required
             className="text-input"
             type="text"
@@ -28,8 +49,9 @@ const AddBook = () => {
         </div>
 
         <div className="space-y-2">
-          <label for="image">Image Url</label>
+          <label htmlFor="image">Image Url</label>
           <input
+            onChange={getFieldData}
             required
             className="text-input"
             type="text"
@@ -40,8 +62,9 @@ const AddBook = () => {
 
         <div className="grid grid-cols-2 gap-8 pb-4">
           <div className="space-y-2">
-            <label for="price">Price</label>
+            <label htmlFor="price">Price</label>
             <input
+              onChange={getFieldData}
               required
               className="text-input"
               type="number"
@@ -51,8 +74,9 @@ const AddBook = () => {
           </div>
 
           <div className="space-y-2">
-            <label for="quantity">Rating</label>
+            <label htmlFor="quantity">Rating</label>
             <input
+              onChange={getFieldData}
               required
               className="text-input"
               type="number"
@@ -66,12 +90,13 @@ const AddBook = () => {
 
         <div className="flex items-center">
           <input
+            onChange={() => setFeatured(!featured)}
             id="input-Bookfeatured"
             type="checkbox"
             name="featured"
             className="w-4 h-4"
           />
-          <label for="featured" className="ml-2 text-sm">
+          <label htmlFor="featured" className="ml-2 text-sm">
             {" "}
             This is a featured book{" "}
           </label>
